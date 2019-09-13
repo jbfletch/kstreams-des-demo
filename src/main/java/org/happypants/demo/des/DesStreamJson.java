@@ -52,13 +52,13 @@ public class DesStreamJson {
 
         StreamsBuilder builder = new StreamsBuilder();
 
-        KStream<String, JsonNode> baseStream = builder.stream("sample-cdc-topic", Consumed.with(Serdes.String(), jsonSerde));
+        KStream<String, JsonNode> baseStream = builder.stream("sample-cdc-topic");
 
         KStream<String, JsonNode> insertOnly = baseStream
                 .filter(isInsert)
                 .mapValues(v -> v.path("before"));
 
-        insertOnly.to("insert-topic", Produced.with(Serdes.String(), jsonSerde));
+        insertOnly.to("insert-topic");
 
 
         return builder.build();

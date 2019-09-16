@@ -50,15 +50,25 @@ public class DesStreamJson {
                         .asText()
                         .equals("I");
 
+        Predicate<String, JsonNode> isNewOrder = (k, v) ->
+                v.path("before").path("ORDERS_ID")
+                        .asText()
+                        .equals("null")
+                &&
+                        !v.path("after").path("ORDERS_ID")
+                                .asText()
+                                .equals("null");
+
         StreamsBuilder builder = new StreamsBuilder();
 
-        KStream<String, JsonNode> baseStream = builder.stream("sample-cdc-topic");
+        KStream<String, JsonNode> baseStream = builder.stream("DBSCHEMA.CABOT_COVE_ORDERS");
 
         KStream<String, JsonNode> insertOnly = baseStream
                 .filter(isInsert)
+                .filter(isNewOrder)
                 .mapValues(v -> v.path("before"));
 
-        insertOnly.to("insert-topic");
+        insertOnly.to("event-order-created");
 
 
         return builder.build();

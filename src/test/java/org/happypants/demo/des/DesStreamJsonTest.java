@@ -30,7 +30,7 @@ class DesStreamJsonTest {
             new TestTopologyExtension<>(this.app::getTopology, this.app.getKafkaProperties());
 
     @Test
-    void uppercaseFilterTest()
+    void cdcFilterMapTest()
             throws IOException {
 
 

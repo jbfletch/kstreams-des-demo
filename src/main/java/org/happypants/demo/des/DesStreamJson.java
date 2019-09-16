@@ -10,10 +10,8 @@ import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.Topology;
-import org.apache.kafka.streams.kstream.Consumed;
 import org.apache.kafka.streams.kstream.KStream;
 import org.apache.kafka.streams.kstream.Predicate;
-import org.apache.kafka.streams.kstream.Produced;
 import org.happypants.demo.des.serde.JsonSerde;
 
 import java.util.Properties;
@@ -54,7 +52,7 @@ public class DesStreamJson {
                 v.path("before").path("ORDERS_ID")
                         .asText()
                         .equals("null")
-                &&
+                        &&
                         !v.path("after").path("ORDERS_ID")
                                 .asText()
                                 .equals("null");

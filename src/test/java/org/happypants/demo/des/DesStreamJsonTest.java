@@ -22,7 +22,7 @@ class DesStreamJsonTest {
     private final Serde<JsonNode> jsonSerde = Serdes.serdeFrom(jsonSerializer, jsonDeserializer);
 
     private final DesStreamJson app = new DesStreamJson();
-    private ObjectMapper mapper = new ObjectMapper()
+    private final ObjectMapper mapper = new ObjectMapper()
             .configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true)
             .configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
     @RegisterExtension

@@ -11,7 +11,7 @@ import org.apache.kafka.common.serialization.Serializer;
 import java.util.Map;
 
 
-public class JsonSerializer implements Serializer<JsonNode> {
+class JsonSerializer implements Serializer<JsonNode> {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     JsonSerializer() {

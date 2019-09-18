@@ -11,7 +11,7 @@ import org.apache.kafka.streams.Topology;
 import org.apache.kafka.streams.kstream.KStream;
 
 
-public class DesStream {
+class DesStream {
 
     public static void main(String[] args) {
         final DesStream desStream = new DesStream();

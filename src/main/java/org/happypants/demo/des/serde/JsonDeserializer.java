@@ -8,7 +8,7 @@ import org.apache.kafka.common.serialization.Deserializer;
 import java.io.IOException;
 import java.util.Map;
 
-public class JsonDeserializer implements Deserializer<JsonNode> {
+class JsonDeserializer implements Deserializer<JsonNode> {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     JsonDeserializer() {

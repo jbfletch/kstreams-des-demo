@@ -10,16 +10,14 @@ import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.Topology;
-import org.apache.kafka.streams.kstream.Consumed;
 import org.apache.kafka.streams.kstream.KStream;
 import org.apache.kafka.streams.kstream.Predicate;
-import org.apache.kafka.streams.kstream.Produced;
 import org.happypants.demo.des.serde.JsonSerde;
 
 import java.util.Properties;
 
 
-public class DesStreamJson {
+class DesStreamJson {
 
 
     private final Serde<JsonNode> jsonSerde = new JsonSerde();
@@ -37,7 +35,8 @@ public class DesStreamJson {
         Properties props = new Properties();
         props.put(StreamsConfig.APPLICATION_ID_CONFIG, "des-demo-stream-json");
         props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
-        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "latest");
+        props.put(StreamsConfig.PROCESSING_GUARANTEE_CONFIG,"exactly_once");
         props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
         props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, jsonSerde.getClass().getName());
         return props;
@@ -50,15 +49,25 @@ public class DesStreamJson {
                         .asText()
                         .equals("I");
 
+        Predicate<String, JsonNode> isNewOrder = (k, v) ->
+                v.path("before").path("ORDERS_ID")
+                        .asText()
+                        .equals("null")
+                        &&
+                        !v.path("after").path("ORDERS_ID")
+                                .asText()
+                                .equals("null");
+
         StreamsBuilder builder = new StreamsBuilder();
 
-        KStream<String, JsonNode> baseStream = builder.stream("sample-cdc-topic");
+        KStream<String, JsonNode> baseStream = builder.stream("DBSCHEMA.CABOT_COVE_ORDERS");
 
         KStream<String, JsonNode> insertOnly = baseStream
                 .filter(isInsert)
+                .filter(isNewOrder)
                 .mapValues(v -> v.path("before"));
 
-        insertOnly.to("insert-topic");
+        insertOnly.to("event-order-created");
 
 
         return builder.build();

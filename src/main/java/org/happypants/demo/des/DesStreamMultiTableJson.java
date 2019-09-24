@@ -101,7 +101,7 @@ class DesStreamMultiTableJson {
 
 
         /* Items Stream */
-        KStream<String, JsonNode> orderItemsStream = builder.stream("DBSCHEMA.CABOT_COVE_ORDER_LINES", Consumed.with(Serdes.String(), jsonSerde))
+        KStream<String, JsonNode> orderItemsStream = builder.stream("DBSCHEMA.CABOT_COVE_ORDER_ITEMS", Consumed.with(Serdes.String(), jsonSerde))
                 .filter(isInsertOrDelete)
                 .map((k, v) -> KeyValue.pair(v.path(getOpType(v)).path("ORDER_ITEM_ID").asText(),addOpType(v)));
 

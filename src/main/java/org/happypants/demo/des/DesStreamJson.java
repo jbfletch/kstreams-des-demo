@@ -36,7 +36,7 @@ class DesStreamJson {
         props.put(StreamsConfig.APPLICATION_ID_CONFIG, "des-demo-stream-json");
         props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "latest");
-        props.put(StreamsConfig.PROCESSING_GUARANTEE_CONFIG,"exactly_once");
+        props.put(StreamsConfig.PROCESSING_GUARANTEE_CONFIG, "exactly_once");
         props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
         props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, jsonSerde.getClass().getName());
         return props;
@@ -44,10 +44,10 @@ class DesStreamJson {
 
     Topology getTopology() {
 
-        Predicate<String, JsonNode> isInsert = (k, v) ->
+        Predicate<String, JsonNode> isUpdate = (k, v) ->
                 v.path("op_type")
                         .asText()
-                        .equals("I");
+                        .equals("U");
 
         Predicate<String, JsonNode> isNewOrder = (k, v) ->
                 v.path("before").path("ORDERS_ID")
@@ -63,7 +63,7 @@ class DesStreamJson {
         KStream<String, JsonNode> baseStream = builder.stream("DBSCHEMA.CABOT_COVE_ORDERS");
 
         KStream<String, JsonNode> insertOnly = baseStream
-                .filter(isInsert)
+                .filter(isUpdate)
                 .filter(isNewOrder)
                 .mapValues(v -> v.path("before"));
 

@@ -29,8 +29,8 @@ class SampleProcessor implements Processor<String, String> {
 
     }
     // The goal here is to grab all the keys in the store and emit the value every 1 min, due to the restriction
-    // of retention period to stream time, we have to just the hammer known as remove to clear out old keys.
-    // I always try to use a string key since there are so many examples where the ley is a long, letters are out there people!!
+    // of retention period to stream time, we have to use the hammer known as remove to clear out old keys.
+    // I always try to use a string key since there are so many examples where the key is a long, letters are out there people!!
     // findSessions uses code point values when it looks for matching keys in the range.
     // The keyTo should be the max length of your string key, this is wonky but so is wall clock time.
     @Override

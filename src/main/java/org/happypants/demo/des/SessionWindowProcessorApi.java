@@ -14,7 +14,7 @@ import java.util.Properties;
 
 // In a world where everything was amazing we would all use stream time, be personal friends with Angela Lansbury
 // and drive Aston Martins; sadly this is not that world.  In light of that I present a simple example of how
-// to emit the latest session value for a given key over a 5 min window. It would be madness to use this in production
+// to emit the latest session value for a given key over a 1 min window. It would be madness to use this in production
 // it's a demo, be safe people :-)
 
 public class SessionWindowProcessorApi {

@@ -14,5 +14,7 @@ It includes the following unit tests
 
 **DesStreamMultiTableJsonTest -** Complex event aggregate example that shows how to implement topology to assure event completeness
 
+**SessionWindowProcessorApiTest -** Simple example of emitting the latest value for a given session key using wall clock time and the processor api
+
 **To Run:**
 Pull the project down, specify jdk 8+, and run `mvn clean test` this will run the unit tests. 

@@ -30,7 +30,7 @@ class SampleWallClockAlertProcessor implements Processor<String, String> {
         if(there.get().hasNext()){
             kvStore.remove(there.get().next().key);
         }else {
-            kvStore.put(new Windowed<>(key, new SessionWindow(0L, 50000)),value);
+            kvStore.put(new Windowed<>(key, new SessionWindow(0L, 50000L)),value);
         }
 
     //

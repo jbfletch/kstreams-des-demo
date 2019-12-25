@@ -16,5 +16,7 @@ It includes the following unit tests
 
 **SessionWindowProcessorApiTest -** Simple example of emitting the latest value for a given session key using wall clock time and the processor api
 
+**WallClockAlertProcessorApiTest -** Demo illustrating a way to use wall clock time to detect when an external integration receives and event and never returns a message back within a given time span. 
+
 **To Run:**
 Pull the project down, specify jdk 8+, and run `mvn clean test` this will run the unit tests. 

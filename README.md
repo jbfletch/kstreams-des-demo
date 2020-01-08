@@ -18,5 +18,7 @@ It includes the following unit tests
 
 **WallClockAlertProcessorApiTest -** Demo illustrating a way to use wall clock time to detect when an external integration receives and event and never returns a message back within a given time span. 
 
+**WallClockWindowProcessorApiTest -** Shows how to use a TimestampKeyValue store to emit the last received value for a given key after x time interval. The interval is tracked per key and begins when that key is first inserted into the store
+
 **To Run:**
 Pull the project down, specify jdk 8+, and run `mvn clean test` this will run the unit tests. 

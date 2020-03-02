@@ -22,5 +22,7 @@ It includes the following unit tests
 
 **SampleLatestNMessagesTest-**  This demonstrates keeping and emitting the last n values (in our example n == 2) for a given key
 
+**SampleLatestNMessagesWindowTest-** This demonstrates keeping and emitting the last n values (in our example n == 2) for a given key, subject to windows of 10 seconds, in this example late arriving records are dropped
+
 **To Run:**
 Pull the project down, specify jdk 8+, and run `mvn clean test` this will run the unit tests. 

@@ -9,6 +9,7 @@ import org.apache.kafka.streams.processor.WallclockTimestampExtractor;
 import org.apache.kafka.streams.state.SessionStore;
 import org.apache.kafka.streams.state.StoreBuilder;
 import org.apache.kafka.streams.state.Stores;
+import org.apache.kafka.streams.state.TimestampedKeyValueStore;
 
 import java.time.Duration;
 import java.util.Properties;
@@ -21,12 +22,9 @@ public class WallClockAlertProcessorApi {
 
     // Create a new session store: FUN FACT! setting retention period does not help in the case
     // of wall clock time since it exclusively uses stream time :-)
-    private final StoreBuilder<SessionStore<String,String>> storeBuilder = Stores.sessionStoreBuilder(
-            Stores.persistentSessionStore("alert-store",Duration.ofSeconds(10000L)),
-            Serdes.String(),
-            Serdes.String()
 
-    );
+    private final StoreBuilder<TimestampedKeyValueStore<String,String>> storeBuilder = Stores.timestampedKeyValueStoreBuilder(
+        Stores.persistentTimestampedKeyValueStore("alert-store"),Serdes.String(),Serdes.String());
 
 
     public static void main(String[] args) {
